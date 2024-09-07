@@ -11,41 +11,37 @@ class Main {
 // Encryption class
 class Encryption {
 
-    // variable For the Generalised term
-    private double x;
+    // Variable for the Generalized term
+    private String x = "x"; // Placeholder for the general variable
 
-    // method to start the Encryption technique
+    // Method to start the Encryption technique
     public void encryption() {
-        System.out.print("you can enter the plain text : ");
+        System.out.print("You can enter the plain text: ");
         Scanner scanner = new Scanner(System.in);
-        String PlainText = scanner.nextLine();
-        int len = PlainText.length();
-        System.out.print("The length of the plain text is : " + len);
+        String plainText = scanner.nextLine();
+        int len = plainText.length();
+        System.out.println("The length of the plain text is: " + len);
         // Call the cosine function
-        Cosine(len);
+        String result = Cosine(len);
+        System.out.println("This is the output of the code: " + result);
     }
 
-    // method to Execute Factorial
-    public int Factorial(int n){
-        int result = 1;
-        for (int i=0;i<n;i++){
-            result *= i;
+    // Method to calculate the General Term of the Cosine Function as a symbolic string
+    public String GeneralTerm(int len) {
+        String factorial = String.format("%d!", 2 * len);
+        return String.format(
+                "(-1)^%d * %s^(%d) / %s",
+                len, x, 2 * len, factorial
+        );
+    }
+
+    // Method for the Cosine Function expression
+    public String Cosine(int len) {
+        StringBuilder cosine = new StringBuilder("cos(" + x + ") = ");
+        cosine.append("1");
+        for (int i = 1; i < len; i++) {
+            cosine.append(" + ").append(GeneralTerm(i));
         }
-        return result;
-    }
-
-    // Method to calculate the General Term of the Cosine Function
-    public double GeneralTerm(int len){
-        return ((Math.pow(-1,len)*(Math.pow(x,2*len))))/Factorial(2*len);
-    }
-
-    // Method For the Cosine Function
-    public void Cosine(int len) {
-        double cosine = 1;
-        for (int i = 0; i < len; i++){
-            cosine = cosine + GeneralTerm(i);
-        }
+        return cosine.toString();
     }
 }
-
-
